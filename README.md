@@ -3,7 +3,7 @@
 ## 屏幕预置手势
 
 1、鼠标移入屏幕四角落，触发四个触发角事件  
-2、屏幕四个边缘宽100px 高为50%，3秒内连续划入3次，触发四个敲击边事件  
+2、屏幕四个边缘宽50px 高为屏幕宽/高50%，3秒内连续划入3次，触发四个敲击边事件  
 
 ## 精确式触控板
 
@@ -54,35 +54,47 @@
 此种操作可一次分开执行多个快捷键。  
 
 如：复制一个地址后希望在谷歌浏览器中画一个手势完成地址栏获得焦点，粘贴地址，回车访问这个连续的操作, 需要执行的按键依次为：ctrl+L 选择地址栏, ctrl+v 粘贴地址，enter访问地址。  
-可设置如下json结构，其中delay为每个快捷键操作时的延时时间单位毫秒,vk_code 接收十六进制虚拟码。具体的键码可在此处获得
+可设置如下json结构，其中delay为每个快捷键操作之前的延时时间，单位毫秒,vk_code 接收十六进制虚拟码。具体的键码可在此处获得
 <https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes>
 
 ```json
-[{
- "delay": 500,
- "buttons": [{
-  "vk_code": "0xA2",
-  "vk_name": "Ctrl"
- }, {
-  "vk_code": "0x4C",
-  "vk_name": "L"
- }]
-}, {
- "delay": 500,
- "buttons": [{
-  "vk_code": "0xA2",
-  "vk_name": "Ctrl"
- }, {
-  "vk_code": "0x56",
-  "vk_name": "V"
- }]
-}, {
- "delay": 500,
- "buttons": [{
-  "vk_code": "0x0D",
-  "vk_name": "Enter"
- }]
-}]
+[
+  {
+    "delay": 500,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x4C",
+        "vk_name": "L"
+      }
+    ]
+  },
+  {
+    "delay": 500,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x56",
+        "vk_name": "V"
+      }
+    ]
+  },
+  {
+    "delay": 500,
+    "buttons": [
+      {
+        "vk_code": "0x0D",
+        "vk_name": "Enter"
+      }
+    ]
+  }
+]
 ```
 
 ## 窗口操作
