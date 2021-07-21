@@ -1,4 +1,5 @@
 # FastGestures
+![image](https://github.com/zhaokeli/FastGestures/blob/main/fg.png)
 
 ## 屏幕预置手势
 
