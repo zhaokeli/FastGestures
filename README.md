@@ -1,5 +1,11 @@
 # FastGestures
+
 ![image](https://github.com/zhaokeli/FastGestures/blob/main/fg.png)
+
+
+## 特别注意 
+此软件最好别跟其它手势软件一块打开混用，可能出现鼠标假死等情况，如果出现右键不能使用的情况可按下 ctrl+shift+alt+Q 强制退出
+
 
 ## 屏幕预置手势
 
