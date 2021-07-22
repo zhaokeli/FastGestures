@@ -128,3 +128,8 @@
 1、执行的脚本内容  
 2、脚本文件所在的绝对路径  
 3、脚本文件相对路径,在C:\Program Files\FastGestures\LuaScript目录中，或C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\LuaScript目录中
+
+## 问题反馈
+QQ群:89193444
+QQ: 735579768
+wechat: kelicom
