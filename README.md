@@ -24,8 +24,18 @@
     - [激活手势界面](#激活手势界面)
     - [Lua脚本](#lua脚本)
       - [可用内置函数](#可用内置函数)
+        - [fg_active_main_winows()](#fg_active_main_winows)
+        - [fg_show_msg(string)](#fg_show_msgstring)
+        - [fg_send_shortcut_group(string)](#fg_send_shortcut_groupstring)
+        - [fg_get_clipboard_text()](#fg_get_clipboard_text)
+        - [fg_set_clipboard_text(string)](#fg_set_clipboard_textstring)
+        - [fg_set_windows_top(hwnd)](#fg_set_windows_tophwnd)
+        - [fg_sleep(int)](#fg_sleepint)
+        - [fg_get_mouse_windows_hwnd()](#fg_get_mouse_windows_hwnd)
+        - [其它示例](#其它示例)
   - [常见问题解决文案](#常见问题解决文案)
   - [问题反馈](#问题反馈)
+
 ![image](https://github.com/zhaokeli/FastGestures/blob/main/fg.png)
 
 ## 本软件目的
@@ -65,7 +75,7 @@
 
 1、四个角落、四个边、单击事件  
 2、2，3，4，5指，在触控板上短按、长按事件，时间可自定义  
-3、忽略单指，两指系统默认操作行为，(两指可一指按下，另一指画手势 用法参考Betterandbetter：<https://13315641.s21v.faiusr.com/58/1/ABUIABA6GAAgmtnK_AUoxN37-gI.mp4>)  
+3、忽略单指，两指系统默认操作行为，(两指可一指按下，另一指画手势 用法参考Betterandbetter：[查看单指画手势视频](https://13315641.s21v.faiusr.com/58/1/ABUIABA6GAAgmtnK_AUoxN37-gI.mp4>)  
 4、三指拖动启用后，三指画手势符号会被忽略  
 
 5、三指：先放上去，左中右单击并抬起后分别代表 鼠标左中右单击手势，同时可画方向手势,也可定义三指为左键或中键拖动功能  
@@ -125,8 +135,7 @@
 此种操作可一次分开执行多个快捷键。  
 
 如：复制一个地址后希望在谷歌浏览器中画一个手势完成地址栏获得焦点，粘贴地址，回车访问这个连续的操作, 需要执行的按键依次为：ctrl+L 选择地址栏, ctrl+v 粘贴地址，enter访问地址。  
-可设置如下json结构，其中delay为每个快捷键操作之前的延时时间，单位毫秒,vk_code 接收十六进制虚拟码。具体的键码可在此处获得
-<https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes>
+可设置如下json结构，其中delay为每个快捷键操作之前的延时时间，单位毫秒,vk_code 接收十六进制虚拟码。具体的键码可在此处获得, [查看全部虚拟键码](https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes)
 
 ```json
 [
@@ -179,13 +188,100 @@
 ### Lua脚本
 
 可输入自己的lua脚本，内容可以为下面几种形式  
-1、执行的脚本内容  
-2、脚本文件所在的绝对路径  
-3、脚本文件相对路径,在C:\Program Files\FastGestures\LuaScript目录中，或C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\LuaScript目录中
+1、直接输入lua脚本内容  
+2、单行输入脚本文件所在的绝对路径  
+3、放入预置的脚本目录,位置二选一
+  C:\Program Files\FastGestures\LuaScript
+  C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\LuaScript
 
 #### 可用内置函数
 
-待完善
+##### fg_active_main_winows()
+
+激活手势主窗口
+
+##### fg_show_msg(string)
+
+显示一个消息提示
+
+```lua
+fg_show_msg("一个提示消息");
+```
+
+##### fg_send_shortcut_group(string)
+
+发送一组快捷键，参数为json字符串,同上面快捷键组一样
+
+```lua
+local keyList=[[
+[
+  {
+    "delay": 10,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x12",
+        "vk_name": "Alt"
+      },
+      {
+        "vk_code": "0x4C",
+        "vk_name": "L"
+      }
+    ]
+  },
+  {
+    "delay": 100,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x53",
+        "vk_name": "S"
+      }
+    ]
+  }
+]
+]]
+fg_send_shortcut_group(keyList);
+```
+
+##### fg_get_clipboard_text()
+
+获取当前剪切板文本内容
+
+##### fg_set_clipboard_text(string)
+
+设置剪切板文本
+
+##### fg_set_windows_top(hwnd)
+
+设置窗口置顶或取消,参数传0时,默认为当前鼠标下的窗口
+
+##### fg_sleep(int)
+
+挂起/延时时间，单位毫秒
+
+##### fg_get_mouse_windows_hwnd()
+
+取当前鼠标下的窗口句柄
+
+##### 其它示例
+
+```lua
+-- 设置文本
+fg_set_clipboard_text("Lua 变量");
+-- 暂停1秒
+fg_sleep(1000);
+-- 取文本
+local tex=fg_get_clipboard_text();
+--提示信息
+fg_show_msg(tex);
+```
 
 ## 常见问题解决文案
 
@@ -195,6 +291,6 @@
 
 ## 问题反馈
 
-QQ群: 89193444  
+QQ群:  [89193444](https://jq.qq.com/?_wv=1027&k=mOqSBLo7)  
 QQ: 735579768  
 微信: kelicom  
