@@ -32,6 +32,7 @@
         - [fg_set_windows_top(hwnd)](#fg_set_windows_tophwnd)
         - [fg_sleep(int)](#fg_sleepint)
         - [fg_get_mouse_windows_hwnd()](#fg_get_mouse_windows_hwnd)
+        - [fg_parse_screen_qrcode()](#fg_parse_screen_qrcode)
         - [其它示例](#其它示例)
   - [常见问题解决文案](#常见问题解决文案)
   - [问题反馈](#问题反馈)
@@ -269,6 +270,10 @@ fg_send_shortcut_group(keyList);
 ##### fg_get_mouse_windows_hwnd()
 
 取当前鼠标下的窗口句柄
+
+##### fg_parse_screen_qrcode()
+
+从屏幕上解析出二维码内容，如果不存在二维码则返回空字符串
 
 ##### 其它示例
 
