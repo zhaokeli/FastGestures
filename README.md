@@ -315,7 +315,7 @@ fg_show_msg(tex);
 一个扩展一个目录，目录名字可随意，但``plugin.json``中``uuid``字段必须唯一，且以后也不能变更  
 扩展目录可放于软件安装目录``C:\Program Files\FastGestures\Plugins``，或用户数据目录``C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\Plugins``
   
-plugin.json结构如下
+``plugin.json``结构如下
 
 ```json
 {
@@ -330,14 +330,53 @@ plugin.json结构如下
 }
 ```
 
-+ uuid: 32位唯一标识,不符合规则会忽略
-+ name: 扩展名字
-+ version: 扩展版本
-+ desc: 扩展描述
-+ executeFileName: 可执行文件名,相对Plugins目录的路径，如果在目录里请带上路径,开头不带斜杠
-+ type: 可执行文件类型，0：lua脚本，1：windows可执行程序
-+ author: 扩展作者
-+ iconPath: 扩展图标，可空，同样是相对路径开头不带斜杠
++ ``uuid``: 32位唯一标识,不符合规则会忽略
++ ``name``: 扩展名字
++ ``version``: 扩展版本
++ ``desc``: 扩展描述
++ ``executeFileName``: 可执行文件名,相对Plugins目录的路径，如果在目录里请带上路径,开头不带斜杠
++ ``type``: 可执行文件类型，0：lua脚本，1：windows可执行程序
++ ``author``: 扩展作者
++ ``iconPath``: 扩展图标，可空，同样是相对路径开头不带斜杠
+
+下面是一个脚本，实现``Ctrl+F`` 、 ``Ctrl+A`` 、``发送文件`` 、的一连串功能  ，文本从命令行入参``arg[1]``取得
+``main.lua``
+
+```lua
+local keyList=[[
+[
+  {
+    "delay": 10,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x46",
+        "vk_name": "F"
+      }
+    ]
+  },
+  {
+    "delay": 100,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x41",
+        "vk_name": "A"
+      }
+    ]
+  }
+]
+]]
+fg_send_shortcut_group(keyList);
+fg_send_text(arg[1]);
+
+```
 
 选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能，执行操作时可传入命令行参数，脚本或可执行文件可解析此参数来执行对应的操作
 
