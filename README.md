@@ -317,21 +317,29 @@ fg_show_msg(tex);
   
 plugin.json结构如下
 
-```bash
+```json
 {
- "uuid":"17963bd79d6b170eace6e1a489332363", // 32位唯一标识
- "name":"搜索客户表", // 扩展名字
- "version":"1.0.0", // 版本
- "desc":"搜索客户表", // 描述
- "executeFileName":"main.lua", // 可执行文件名,如果在目录里请带上路径,相对路径,开头不带斜杠
- "type":0,  // 可执行文件类型，0：lua脚本，1：windows可执行程序
- "author":"zhaokeli", // 扩展作者
- "iconPath":"icon.png" // 扩展图标，可空，同样是相对路径开头不带斜杠
+ "uuid":"17963bd79d6b170eace6e1a489332363",
+ "name":"搜索客户表",
+ "version":"1.0.0",
+ "desc":"搜索客户表",
+ "executeFileName":"main.lua",
+ "type":0,
+ "author":"zhaokeli",
+ "iconPath":"icon.png"
 }
 ```
 
-使用时注意去掉里面的注释  
-选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能
++ uuid: 32位唯一标识,不符合规则会忽略
++ name: 扩展名字
++ version: 扩展版本
++ desc: 扩展描述
++ executeFileName: 可执行文件名,相对Plugins目录的路径，如果在目录里请带上路径,开头不带斜杠
++ type: 可执行文件类型，0：lua脚本，1：windows可执行程序
++ author: 扩展作者
++ iconPath: 扩展图标，可空，同样是相对路径开头不带斜杠
+
+选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能，执行操作时可传入命令行参数，脚本或可执行文件可解析此参数来执行对应的操作
 
 ## 常见问题解决文案
 
