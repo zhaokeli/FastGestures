@@ -28,12 +28,17 @@
         - [fg_show_msg(string)](#fg_show_msgstring)
         - [fg_send_shortcut_group(string)](#fg_send_shortcut_groupstring)
         - [fg_get_clipboard_text()](#fg_get_clipboard_text)
-        - [fg_set_clipboard_text(string)](#fg_set_clipboard_textstring)
-        - [fg_set_windows_top(hwnd)](#fg_set_windows_tophwnd)
-        - [fg_sleep(int)](#fg_sleepint)
+        - [fg_set_clipboard_text(string text)](#fg_set_clipboard_textstring-text)
+        - [fg_set_windows_top(int hwnd)](#fg_set_windows_topint-hwnd)
+        - [fg_sleep(int time)](#fg_sleepint-time)
         - [fg_get_mouse_windows_hwnd()](#fg_get_mouse_windows_hwnd)
+        - [fg_get_mouse_windows_path()](#fg_get_mouse_windows_path)
         - [fg_parse_screen_qrcode()](#fg_parse_screen_qrcode)
+        - [fg_active_application(string fullPath,int isRunAs)](#fg_active_applicationstring-fullpathint-isrunas)
+        - [fg_send_text(string text)](#fg_send_textstring-text)
+        - [fg_create_qrcode(string text)](#fg_create_qrcodestring-text)
         - [其它示例](#其它示例)
+    - [扩展功能](#扩展功能)
   - [常见问题解决文案](#常见问题解决文案)
   - [问题反馈](#问题反馈)
 
@@ -255,15 +260,15 @@ fg_send_shortcut_group(keyList);
 
 获取当前剪切板文本内容
 
-##### fg_set_clipboard_text(string)
+##### fg_set_clipboard_text(string text)
 
 设置剪切板文本
 
-##### fg_set_windows_top(hwnd)
+##### fg_set_windows_top(int hwnd)
 
 设置窗口置顶或取消,参数传0时,默认为当前鼠标下的窗口
 
-##### fg_sleep(int)
+##### fg_sleep(int time)
 
 挂起/延时时间，单位毫秒
 
@@ -271,9 +276,25 @@ fg_send_shortcut_group(keyList);
 
 取当前鼠标下的窗口句柄
 
+##### fg_get_mouse_windows_path()
+
+取当前鼠标下的窗口可执行文件路径
+
 ##### fg_parse_screen_qrcode()
 
 从屏幕上解析出二维码内容，如果不存在二维码则返回空字符串
+
+##### fg_active_application(string fullPath,int isRunAs)
+
+打开或激活应用，fullPath应用的全路径，isRunAs是否使用管理员权限执行
+
+##### fg_send_text(string text)
+
+发送文本
+
+##### fg_create_qrcode(string text)
+
+生成并显示一个二维码
 
 ##### 其它示例
 
@@ -287,6 +308,30 @@ local tex=fg_get_clipboard_text();
 --提示信息
 fg_show_msg(tex);
 ```
+
+### 扩展功能
+
+一个扩展至少有两个文件 ``plugin.json`` 配置文件，一个主执行文件 ``main.lua``,主执行文件由配置文件中来指定  
+一个扩展一个目录，目录名字可随意，但``plugin.json``中``uuid``字段必须唯一，且以后也不能变更  
+扩展目录可放于软件安装目录``C:\Program Files\FastGestures\Plugins``，或用户数据目录``C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\Plugins``
+  
+plugin.json结构如下
+
+```bash
+{
+ "uuid":"17963bd79d6b170eace6e1a489332363", // 32位唯一标识
+ "name":"搜索客户表", // 扩展名字
+ "version":"1.0.0", // 版本
+ "desc":"搜索客户表", // 描述
+ "executeFileName":"main.lua", // 可执行文件名,如果在目录里请带上路径,相对路径,开头不带斜杠
+ "type":0,  // 可执行文件类型，0：lua脚本，1：windows可执行程序
+ "author":"zhaokeli", // 扩展作者
+ "iconPath":"icon.png" // 扩展图标，可空，同样是相对路径开头不带斜杠
+}
+```
+
+使用时注意去掉里面的注释  
+选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能
 
 ## 常见问题解决文案
 
