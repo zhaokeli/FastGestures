@@ -48,7 +48,7 @@
   - [常见问题解决文案](#常见问题解决文案)
   - [问题反馈](#问题反馈)
 
-![image](https://github.com/zhaokeli/FastGestures/blob/main/fg.png)
+![image](https://raw.githubusercontent.com/zhaokeli/FastGestures/e09a0270243c31eac8dac6e261f2e81cb5355604/fg.png)
 
 ## 本软件目的
 
