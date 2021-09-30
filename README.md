@@ -45,8 +45,8 @@
         - [fg_volume_switch()](#fg_volume_switch)
         - [fg_brightness_inc()](#fg_brightness_inc)
         - [fg_brightness_dec()](#fg_brightness_dec)
-      - [fg_run_cmd(string cmdStr,int isShow,int isReturn)](#fg_run_cmdstring-cmdstrint-isshowint-isreturn)
-      - [fg_get_pid_by_name(string processName)](#fg_get_pid_by_namestring-processname)
+        - [fg_run_cmd(string cmdStr,int isShow,int isReturn)](#fg_run_cmdstring-cmdstrint-isshowint-isreturn)
+        - [fg_get_pid_by_name(string processName)](#fg_get_pid_by_namestring-processname)
         - [其它示例](#其它示例)
     - [扩展功能](#扩展功能)
   - [常见问题解决文案](#常见问题解决文案)
@@ -345,11 +345,11 @@ fg_send_shortcut_group(keyList);
 
 屏幕亮度减，（部分屏幕不支持）
 
-#### fg_run_cmd(string cmdStr,int isShow,int isReturn)
+##### fg_run_cmd(string cmdStr,int isShow,int isReturn)
 
 执行命令行并取返回值,cmdStr命令，isShow是否显示命令行窗口，isReturn是否取返回值，特别注意取返回值时确保调用的程序会自动退出。
 
-#### fg_get_pid_by_name(string processName)
+##### fg_get_pid_by_name(string processName)
 
 通过进程名字取Pid,多个相同名字进程只取首个，名字忽略大小写
 
