@@ -47,6 +47,8 @@
         - [fg_brightness_dec()](#fg_brightness_dec)
         - [fg_run_cmd(string cmdStr,int isShow,int isReturn)](#fg_run_cmdstring-cmdstrint-isshowint-isreturn)
         - [fg_get_pid_by_name(string processName)](#fg_get_pid_by_namestring-processname)
+        - [fg_mouse_wheel(int direction,int num,int times,int delay)](#fg_mouse_wheelint-directionint-numint-timesint-delay)
+      - [fg_get_selected_files_path(int type)](#fg_get_selected_files_pathint-type)
         - [其它示例](#其它示例)
     - [扩展功能](#扩展功能)
   - [常见问题解决文案](#常见问题解决文案)
@@ -353,6 +355,25 @@ fg_send_shortcut_group(keyList);
 
 通过进程名字取Pid,多个相同名字进程只取首个，名字忽略大小写
 
+##### fg_mouse_wheel(int direction,int num,int times,int delay)
+
+鼠标滚轮事件
+direction 0:向下滚动 1:向上滚动
+num 每次滚动距离
+times 滚动次数
+delay 多次滚动时延时默认10毫秒
+
+#### fg_get_selected_files_path(int type)
+
+type 0:返回选中所有的(文件/目录)路径，1:返回选中文件路径,2:返回选中目录路径
+
+返回结构为一个元表，示例,取选中的第一个文件路径
+
+```lua
+local fileList=fg_get_selected_files_path(1);
+fg_show_msg(fileList[0]);
+```
+
 ##### 其它示例
 
 ```lua
@@ -441,6 +462,11 @@ fg_send_text(arg[1]);
 
 选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能，执行操作时可传入命令行参数，脚本或可执行文件可解析此参数来执行对应的操作  
 
+lua脚本中取命令行中的参数有两种
+
+* 直接使用arg[0]，arg[1]，来取以空格分隔的命令参数
+* 使用全局变量cmd_params[name]，取对应的值，例 --name="keli zhao" --path=E:/test
+
 lua脚本中依然可用预置的全局变量
 
 ## 常见问题解决文案
@@ -449,6 +475,14 @@ lua脚本中依然可用预置的全局变量
 2、电脑上安装有360卫士杀毒的用户,请加将本软件加入信任,并关闭驱动防护.因为360卫士和杀毒视所有模拟鼠标、键盘操作的非付费认证签名软件均为恶意软件,会直接驱动拦截,本软件用到鼠标(画轨迹)，键盘(发送快捷键)，此操作会导致右键失效.加信任和关防护后还不能使用的,可以尝试退出/卸载360后再次尝试使用，Win10自带安全软件也是不错的选择哟!  
 3、如果遇到拖动文件到一些编辑等软件上出现不可用的情况，请重启手势软件和编辑器后再次尝试，当前以普通用户登陆，而手势软件和编辑器使用管理员权限打开的情况下会遇到此种问题。  
 4、打开/激活应用功能，如果遇到一开始可以正常激活，后来又激活不了了，可尝试重启软件来解决  
+5、如果安装成功，启动时出现0xC000007b错误，可能因为系统运行库损坏，请重新下载vc运行库修复 <https://www.microsoft.com/zh-CN/download/details.aspx?id=48145>
+
+6、如果win7下出现部分emoji字符不显示，可下载 ```Segoe UI Emoji``` (600K)字体安装后重启软件
+
+7、如果出现启动异常或崩溃，请修复系统相关运行库文件，
+打开微软官网 <https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170>，
+64位运行库 <https://aka.ms/vs/17/release/vc_redist.x64.exe>
+32位运行库 <https://aka.ms/vs/17/release/vc_redist.x86.exe>
 
 ## 问题反馈
 
