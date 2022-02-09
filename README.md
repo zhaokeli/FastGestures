@@ -5,6 +5,7 @@
   - [特别注意](#特别注意)
   - [手势助记符](#手势助记符)
   - [快速入门](#快速入门)
+  - [使用小技巧](#使用小技巧)
   - [手势组合建议](#手势组合建议)
   - [屏幕触发操作](#屏幕触发操作)
   - [连续触发手势](#连续触发手势)
@@ -12,6 +13,7 @@
   - [应用列表](#应用列表)
   - [配置项](#配置项)
     - [手势键](#手势键)
+    - [手势快捷键](#手势快捷键)
     - [手势超时时间](#手势超时时间)
     - [手势方向限制](#手势方向限制)
     - [鼠标下窗口](#鼠标下窗口)
@@ -29,7 +31,13 @@
     - [微信多开](#微信多开)
     - [激活手势界面](#激活手势界面)
     - [打开地址/搜索](#打开地址搜索)
+    - [扩展功能](#扩展功能)
+    - [Lua 扩展内置函数](#lua-扩展内置函数)
+      - [getParamToBoolean(name,default)](#getparamtobooleannamedefault)
+      - [getParamToNumber(name,default)](#getparamtonumbernamedefault)
+      - [getParamToString(name,default)](#getparamtostringnamedefault)
     - [Lua 脚本](#lua-脚本)
+    - [Lua 开放手势函数](#lua-开放手势函数)
       - [fg_active_main_winows()](#fg_active_main_winows)
       - [fg_show_msg(string)](#fg_show_msgstring)
       - [fg_send_shortcut_group(string)](#fg_send_shortcut_groupstring)
@@ -53,7 +61,6 @@
       - [fg_mouse_wheel(int direction,int num,int times,int delay)](#fg_mouse_wheelint-directionint-numint-timesint-delay)
       - [fg_get_selected_files_path(int type)](#fg_get_selected_files_pathint-type)
       - [其它示例](#其它示例)
-    - [扩展功能](#扩展功能)
   - [常见问题解决文案](#常见问题解决文案)
   - [问题反馈](#问题反馈)
 
@@ -88,6 +95,11 @@
 鼠标按下右键，或两指分开一段距离放触控板一指不动另一指画方向，或按下设置的键盘手势键接着移动鼠标或单指在触控板上移动，此时屏幕上就会出现轨迹从而识别出当前画的方向手势符号，除了使用方向手势外也可添加鼠标点击、键盘按键等手势符号，当按下的手势键释放时就会查找命中的操作去执行
 
 手势分为应用上手势，分组手势，全局手势，组合出一组手势符号后会先查询鼠标下面应用有没有设置对应的手势，如果没有就查找应用所在的分组手势，分组也没有就会查找全局手势。期间有一个匹配就会终止查询，执行对应的操作
+
+## 使用小技巧
+
+1、`→◐◐` 按下鼠标右键向一滑动一下，点击鼠标左键加对应的百度搜索，360搜索，必应搜索，Google搜索，同样可以用其它方向键配合点击设置其它功能
+2、`W` 按下鼠标右键，按下键盘上W 打开激活微信，以此类推可以把键盘上0-9，A-Z单键都设置成打开QQ,Redis,phpstorm等你常用的应用上
 
 ## 手势组合建议
 
@@ -131,6 +143,10 @@
 为了方便配合触控板上单指画手势的操作，添加了自定义手势键功能，按下键盘上自定义的手势键后，单指和鼠标可直接画手势
 
 手势键：中 右 X1 X2键 自定义键 任意一个按下，移动大于 4 个像素后开始识别手势轨迹方向键
+
+### 手势快捷键
+
+手势快捷键操作方式，按下键盘或鼠标手势键，然后按下0-9或A-Z任意数量的键盘按键，组合成一组手势符号，然后设置为对应的操作，可以很方便的把你用到的所有应用添加进来，实现快速启动
 
 ### 手势超时时间
 
@@ -243,6 +259,105 @@
 
 执行此操作时可根据当前选中文本是否是地址，实现拖拽打开地址，搜索等功能，搜索时可用当前剪切板文本做为关键词
 
+### 扩展功能
+
+更多扩展可加 QQ 群下载
+
+一个扩展至少有两个文件 `plugin.json` 配置文件，一个主执行文件 `main.lua`,主执行文件由配置文件中来指定  
+一个扩展一个目录，目录名字可随意，但`plugin.json`中`uuid`字段必须唯一，且以后也不能变更  
+扩展目录可放于软件安装目录`C:\Program Files\FastGestures\Plugins`，或用户数据目录`C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\Plugins`
+
+可使用软件扩展管理->新建扩展来初始化一个新扩展目录
+
+`plugin.json`结构如下
+
+```json
+{
+  "uuid": "17963bd79d6b170eace6e1a489332363",
+  "name": "搜索客户表",
+  "version": "1.0.0",
+  "desc": "搜索客户表",
+  "executeFileName": "main.lua",
+  "type": 0,
+  "author": "zhaokeli",
+  "iconPath": "icon.png"
+}
+```
+
+- `uuid`: 32 位唯一标识,不符合规则会忽略
+- `name`: 扩展名字
+- `version`: 扩展版本
+- `desc`: 扩展描述
+- `executeFileName`: 可执行文件名,相对 Plugins 目录的路径，如果在目录里请带上路径,开头不带斜杠
+- `type`: 可执行文件类型，0：lua 脚本，1：windows 可执行程序
+- `author`: 扩展作者
+- `iconPath`: 扩展图标，可空，同样是相对路径开头不带斜杠
+
+下面是一个脚本，实现`Ctrl+F` 、 `Ctrl+A` 、`发送文件` 、的一连串功能 ，文本从命令行入参`arg[1]`取得
+`main.lua`
+
+```lua
+local keyList=[[
+[
+  {
+    "delay": 10,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x46",
+        "vk_name": "F"
+      }
+    ]
+  },
+  {
+    "delay": 100,
+    "buttons": [
+      {
+        "vk_code": "0xA2",
+        "vk_name": "Ctrl"
+      },
+      {
+        "vk_code": "0x41",
+        "vk_name": "A"
+      }
+    ]
+  }
+]
+]]
+fg_send_shortcut_group(keyList);
+fg_send_text(arg[1]);
+
+```
+
+选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能，执行操作时可传入命令行参数，脚本或可执行文件可解析此参数来执行对应的操作
+
+lua 脚本中取命令行中的参数
+
+- 直接使用 arg[0]，arg[1]，来取以空格分隔的命令参数
+- 使用全局变量 cmd_params[name]，取对应的值，例 --name="keli zhao" --path=E:/test
+- 使用Lua扩展内置函数解析成指定类型的入参
+
+lua 脚本中依然可用预置的全局变量
+
+### Lua 扩展内置函数
+
+当使用Lua写扩展时可使用下面内置函数解析出扩展按规则传入的参数
+
+#### getParamToBoolean(name,default)
+
+取扩展参数，并转为boolean
+
+#### getParamToNumber(name,default)
+
+取扩展参数，并转为number
+
+#### getParamToString(name,default)
+
+取扩展参数，并转为string
+
 ### Lua 脚本
 
 可输入自己的 lua 脚本，内容可以为下面几种形式  
@@ -257,7 +372,7 @@ C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\LuaScript
 - **FILE** 脚本全路径
 - **DIR** 脚本所在路径,结尾不带斜线
 
-以下为可用的内置函数
+### Lua 开放手势函数
 
 #### fg_active_main_winows()
 
@@ -412,88 +527,6 @@ local tex=fg_get_clipboard_text();
 --提示信息
 fg_show_msg(tex);
 ```
-
-### 扩展功能
-
-更多扩展可加 QQ 群下载
-
-一个扩展至少有两个文件 `plugin.json` 配置文件，一个主执行文件 `main.lua`,主执行文件由配置文件中来指定  
-一个扩展一个目录，目录名字可随意，但`plugin.json`中`uuid`字段必须唯一，且以后也不能变更  
-扩展目录可放于软件安装目录`C:\Program Files\FastGestures\Plugins`，或用户数据目录`C:\Users\xxxx\AppData\Roaming\zhaokeli.com\FastGestures\Plugins`
-
-可使用软件扩展管理->新建扩展来初始化一个新扩展目录
-
-`plugin.json`结构如下
-
-```json
-{
-  "uuid": "17963bd79d6b170eace6e1a489332363",
-  "name": "搜索客户表",
-  "version": "1.0.0",
-  "desc": "搜索客户表",
-  "executeFileName": "main.lua",
-  "type": 0,
-  "author": "zhaokeli",
-  "iconPath": "icon.png"
-}
-```
-
-- `uuid`: 32 位唯一标识,不符合规则会忽略
-- `name`: 扩展名字
-- `version`: 扩展版本
-- `desc`: 扩展描述
-- `executeFileName`: 可执行文件名,相对 Plugins 目录的路径，如果在目录里请带上路径,开头不带斜杠
-- `type`: 可执行文件类型，0：lua 脚本，1：windows 可执行程序
-- `author`: 扩展作者
-- `iconPath`: 扩展图标，可空，同样是相对路径开头不带斜杠
-
-下面是一个脚本，实现`Ctrl+F` 、 `Ctrl+A` 、`发送文件` 、的一连串功能 ，文本从命令行入参`arg[1]`取得
-`main.lua`
-
-```lua
-local keyList=[[
-[
-  {
-    "delay": 10,
-    "buttons": [
-      {
-        "vk_code": "0xA2",
-        "vk_name": "Ctrl"
-      },
-      {
-        "vk_code": "0x46",
-        "vk_name": "F"
-      }
-    ]
-  },
-  {
-    "delay": 100,
-    "buttons": [
-      {
-        "vk_code": "0xA2",
-        "vk_name": "Ctrl"
-      },
-      {
-        "vk_code": "0x41",
-        "vk_name": "A"
-      }
-    ]
-  }
-]
-]]
-fg_send_shortcut_group(keyList);
-fg_send_text(arg[1]);
-
-```
-
-选择扩展功能后，根据扩展的使用方法，是否需要设置命令行入参来执行对应的功能，执行操作时可传入命令行参数，脚本或可执行文件可解析此参数来执行对应的操作
-
-lua 脚本中取命令行中的参数有两种
-
-- 直接使用 arg[0]，arg[1]，来取以空格分隔的命令参数
-- 使用全局变量 cmd_params[name]，取对应的值，例 --name="keli zhao" --path=E:/test
-
-lua 脚本中依然可用预置的全局变量
 
 ## 常见问题解决文案
 
