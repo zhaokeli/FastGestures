@@ -1,6 +1,6 @@
 # FastGestures
 
-[使用说明](https://fg.zhaokeli.com/#doc>) 
+[使用说明](https://fg.zhaokeli.com/#doc) 
 
 ## 问题反馈
 
